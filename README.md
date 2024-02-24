@@ -1,66 +1,326 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Jobsheet 2 : ROUTING, CONTROLLER, DAN VIEW
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+> Nama : Haidar Aly
 
-## About Laravel
+> Kelas : TI-2F
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+> Absen : 14
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Praktikum 1
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Basic Routing
+#### /hello route
+```php
+Route::get('/hello', function () {
+    return 'Hello World';
+});
+```
+<img src="public/screenshot/Route_Hello_Prak1.png" width="400">
 
-## Learning Laravel
+#### /world route
+```php
+Route::get('/world', function () {
+     return 'World';
+});
+```
+<img src="public/screenshot/Route_World_Prak1.png" width="400">
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Route Parameters
+#### /user route
+```php
+Route::get('/user/{name}', function ($name) {
+     return 'Nama saya '. $name;
+});
+```
+<img src="public/screenshot/Route_User_Prak2.png" width="400">
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+#### posts/comments route
+```php
+Route::get('/posts/{post}/comments/{comment}', function ($postId, $commentId) {
+     return 'Pos ke-'. $postId. ', Komentar ke-: '. $commentId;
+});
+```
+<img src="public/screenshot/Route_Posts_Prak2.png" width="400">
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Optional Parameters
+#### /user route (Null value)
+```php
+Route::get('/user/{name?}', function ($name = null) {
+    return 'Nama Saya '. $name;
+});
+```
+##### Before
+<img src="public/screenshot/Route_User_Prak3.png" width="400">
 
-## Laravel Sponsors
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+##### After
+<img src="public/screenshot/Route_User_After_Prak3.png" width="400">
 
-### Premium Partners
+#### /user route (name value)
+```php
+Route::get('/user/{name?}', function ($name = 'Haidar') {
+    return 'Nama Saya '. $name;
+});
+```
+<img src="public/screenshot/Route_User_2_Prak3.png" width="400">
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+## Praktikum 2
+### Membuat Controller
+#### Welcome Controller
+```php
+<?php
 
-## Contributing
+namespace App\Http\Controllers;
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+use Illuminate\Http\Request;
 
-## Code of Conduct
+class WelcomeController extends Controller
+{
+    public function hello() {
+        return 'Hello World';
+    }
+}
+```
+#### Route Welcome Controller
+```php
+Route::get('/hello', [WelcomeController::class,'hello']);
+```
+<img src="public/screenshot/Controller_Home.png" width="400">
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+#### Page Controller
+```php
+<?php
 
-## Security Vulnerabilities
+namespace App\Http\Controllers;
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+use Illuminate\Http\Request;
 
-## License
+class PageController extends Controller
+{
+    //
+    public function about() {
+        return 'NIM : 2241720258
+                <br>
+                Nama : Haidar Aly';
+    }
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    public function articles($id)
+    {
+        return 'Ini adalah halaman artikel dengan id: '. $id;
+    }
+
+    public function index() {
+        return 'Selamat Datang';
+    }   
+}
+```
+#### Route Page Controller
+```php
+Route::get('/', [PageController::class,'index']);
+Route::get('/about', [PageController::class,'about']);
+Route::get('/articles/{id}', [PageController::class,'articles']);
+```
+<img src="public/screenshot/Controller_Page&Home.png" width="400">
+<img src="public/screenshot/Controller_Page&About.png" width="400">
+<img src="public/screenshot/Controller_Page&Article.png" width="400">
+
+#### Home Controller
+```php
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class HomeController extends Controller
+{
+    //
+    public function index() {
+        return 'Selamat Datang';
+    }   
+}
+```
+#### Route Home Controller
+```php
+Route::get('/', [HomeController::class,'index']);
+```
+<img src="public/screenshot/Controller_Page&Home.png" width="400">
+
+#### About Controller
+```php
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class AboutController extends Controller
+{
+    //
+    public function about() {
+        return 'NIM : 2241720258
+                <br>
+                Nama : Haidar Aly';
+    }
+}
+```
+#### Route About Controller
+```php
+Route::get('/about', [AboutController::class,'about']);
+```
+<img src="public/screenshot/Controller_Page&About.png" width="400">
+
+#### Articles Controller
+```php
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class ArticleController extends Controller
+{
+    //
+    public function articles($id)
+    {
+        return 'Ini adalah halaman artikel dengan id: '. $id;
+    }
+}
+```
+#### Route Articles Controller
+```php
+Route::get('/articles/{id}', [ArticleController::class,'articles']);
+```
+<img src="public/screenshot/Controller_Page&Article.png" width="400">
+
+### Resource Controller
+#### Photo Controller
+```php 
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class PhotoController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        //
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        //
+    }
+}
+```
+#### Route Photo Controller
+```php
+Route::resource('photos', PhotoController::class);
+```
+<img src="public/screenshot/Controller_List_Before.png" width="400">
+
+#### Route Photo Controller
+```php
+Route::resource('photos', PhotoController::class)->only([
+    'index','show'
+]);
+
+Route::resource('photos', PhotoController::class)->except([
+    'create','store', 'update', 'destroy'
+]);
+```
+<img src="public/screenshot/Controller_List_After.png" width="400">
+
+## Praktikum 3
+### Membuat View
+#### hello.blade.php
+```html
+<!-- View pada resource/views/blog/hello.blade.php -->
+<html>
+    <body>
+        <h1>Hello, {{ $name }}</h1>
+        <h1>You are {{ $occupation }}</h1>
+    </body>
+</html>
+```
+
+#### Controller blade.php
+```php
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class WelcomeController extends Controller
+{
+    public function hello() {
+        return 'Hello World';
+    }
+
+    public function greeting() {
+        return view('blog.hello')
+            ->with('name', 'Haidar')
+            ->with('occupation', 'Astronaut');
+    }
+}
+```
+
+#### route blade.php
+```php
+Route::get('/greeting', function () {
+     return view('blog.hello', ['name' => 'Haidar']);
+});
+
+Route::get('/greeting', [WelcomeController::class,'greeting']);
+```
+<img src="public/screenshot/View_Greeting.png" width="400">
+<img src="public/screenshot/View_Greeting_Occupation.png" width="400">
